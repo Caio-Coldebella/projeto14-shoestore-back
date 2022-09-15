@@ -7,7 +7,7 @@ export async function itemspostcontroller(req,res){
         res.sendStatus(201);
     } catch (error) {
         console.error(error);
-        res.sendStatus(500);
+        res.status(500).send(error);
     }
 }
 
