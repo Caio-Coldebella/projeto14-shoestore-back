@@ -27,5 +27,6 @@ export default function itemMiddleware(req,res,next){
         return;
     }
     res.locals.obj = obj;
+    console.log("fim middleware")
     next();
 }
