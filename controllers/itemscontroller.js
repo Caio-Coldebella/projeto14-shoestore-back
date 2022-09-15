@@ -12,5 +12,33 @@ export async function itemspostcontroller(req,res){
 }
 
 export async function itemsgetcontroller(req,res){
-    res.status(200).send("hellooo");
+    const prodtype = req.query.type;
+    const name = req.query.name;
+    try {
+        if(name){
+            const arr = await db.collection("items").find({name: name}).toArray();
+            if(arr.length === 0){
+                res.sendStatus(404);
+                return;
+            }
+            res.send(arr);
+        }else if(prodtype){
+            const arr = await db.collection("items").find({type: prodtype}).toArray();
+            if(arr.length === 0){
+                res.sendStatus(404);
+                return;
+            }
+            res.send(arr);
+        }else{
+            const arr = await db.collection("items").find().toArray();
+            if(arr.length === 0){
+                res.sendStatus(404);
+                return;
+            }
+            res.send(arr);
+        }
+    } catch (error) {
+        console.error(error);
+        res.sendStatus(500);
+    }
 }
