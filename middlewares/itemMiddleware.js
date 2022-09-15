@@ -9,7 +9,7 @@ export default function itemMiddleware(req,res,next){
         type: Joi.string().min(1).required(),
         image: Joi.string().min(1).required()
     });
-    const validate = postSchema.validate(obj);
+    const validate = itemspostSchema.validate(obj);
     if(validate.error){
         console.error(validate.error)
         res.sendStatus(400);
@@ -27,6 +27,5 @@ export default function itemMiddleware(req,res,next){
         return;
     }
     res.locals.obj = obj;
-    console.log("fim middleware")
     next();
 }

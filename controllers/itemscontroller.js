@@ -2,7 +2,6 @@ import db from "../src/db.js";
 
 export async function itemspostcontroller(req,res){
     const obj = res.locals.obj;
-    console.log(obj)
     try {
         await db.collection("items").insertOne(obj);
         res.sendStatus(201);
