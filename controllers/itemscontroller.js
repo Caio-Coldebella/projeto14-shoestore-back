@@ -1,5 +1,14 @@
+import db from "../src/db.js";
+
 export async function itemspostcontroller(req,res){
-    res.status(200).send("hello");
+    const obj = res.locals.obj;
+    try {
+        await db.collection("items").insertOne(obj);
+        res.sendStatus(201);
+    } catch (error) {
+        console.error(error);
+        res.sendStatus(500);
+    }
 }
 
 export async function itemsgetcontroller(req,res){
