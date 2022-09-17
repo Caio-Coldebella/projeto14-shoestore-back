@@ -1,9 +1,11 @@
 import db from "../src/db.js";
 
-export async function loginController(req, res) {
+export async function signupController(req, res) {
    const userData = req.body;
    try {
-      await db.collection("users").findOne({name:'123'});
+      await db.collection("users").insertOne({
+         ...userData,
+      });
       console.log(userData)
       res.send(userData)
    } catch (error) {
