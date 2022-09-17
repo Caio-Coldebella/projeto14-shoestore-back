@@ -7,16 +7,19 @@ export async function signinController(req, res) {
    try {
       const existingUser = await db
          .collection("sessions")
-         .findOne({ name: userData.name });
+         .findOne({ token: token });
       if (existingUser) {
          return res.sendStatus(409);
       }
       await db.collection("sessions").insertOne({
          name: userData.name,
          token,
-         lastStatus:Date.now()
+         lastStatus: Date.now(),
       });
-      res.send(token);
+      res.send({
+         token,
+         name: userData.name,
+      });
    } catch (error) {
       console.log(error.message);
       res.sendStatus(500);
