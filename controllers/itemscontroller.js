@@ -13,10 +13,10 @@ export async function itemspostcontroller(req,res){
 
 export async function itemsgetcontroller(req,res){
     const prodtype = req.query.type;
-    const name = req.query.name;
+    const id = req.query.id;
     try {
-        if(name){
-            const arr = await db.collection("items").find({name: name}).toArray();
+        if(id){
+            const arr = await db.collection("items").find({_id: id}).toArray();
             if(arr.length === 0){
                 res.sendStatus(404);
                 return;
