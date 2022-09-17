@@ -16,7 +16,7 @@ export async function itemsgetcontroller(req,res){
     const id = req.query.id;
     try {
         if(id){
-            const arr = await db.collection("items").find({_id: id}).toArray();
+            const arr = await db.collection("items").find({_id: ObjectId(id)}).toArray();
             if(arr.length === 0){
                 res.sendStatus(404);
                 return;
