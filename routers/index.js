@@ -1,10 +1,12 @@
 import { Router } from "express";
 import itemsrouter from "./itemsrouter.js";
-import loginRouter from "./loginRouter.js";
-import createAccountRouter from "./createAccountRouter.js";
+import signinRouter from "./signinRouter.js";
+import signupRouter from "./signupRouter.js";
+import statusRouter from './statusRouter.js';
 
 const router = Router();
 router.use(itemsrouter);
-router.use(loginRouter);
-router.use(createAccountRouter);
+router.use(signinRouter);
+router.use(signupRouter);
+router.use(statusRouter)
 export default router;

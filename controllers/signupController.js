@@ -1,6 +1,6 @@
 import db from "../src/db.js";
 
-export async function createAccountController(req, res) {
+export async function signupController(req, res) {
    const userData = req.body;
    try {
       await db.collection("users").insertOne({
