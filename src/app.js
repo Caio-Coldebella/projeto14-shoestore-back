@@ -8,9 +8,6 @@ app.use(express.json());
 app.use(cors());
 app.use(router);
 
-app.get("/", (req, res) => {
-   res.status(200).send("Hello world");
-});
 setInterval(async () => {
    const seconds = Date.now() - 15 * 1000;
    console.log(seconds);
