@@ -1,4 +1,5 @@
 import db from "../src/db.js";
+import {ObjectId} from "mongodb";
 
 export async function postcheckoutController(req,res){
     const id = res.locals.id;
@@ -20,7 +21,13 @@ export async function getcheckoutController(req,res){
             res.sendStatus(404)
             return;
         }
-        res.send(cart[0].cart);
+        const arr = [];
+        const ids = cart[0].cart;
+        for(let i=0; i<ids.length; i++){
+            const obj = await db.collection("items").find({_id: ObjectId(ids[i])}).toArray();
+            arr.push(obj[0]);
+        }
+        res.send(arr);
     } catch (error) {
         console.error(error);
         res.sendStatus(500);
