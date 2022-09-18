@@ -1,15 +1,14 @@
 import db from "../src/db.js";
 
 export async function statusController(req, res) {
-   const { token } = req.body;
-
+   const { token, lastStatus, userId } = req.body;
    try {
       const existingUser = await db
          .collection("sessions")
-         .findOne({ token: token });
-
-      if (!existingUser) {
-         res.sendStatus(404);
+         .find({ token: token }).toArray();
+      if (existingUser.length === 0) {
+         await db.collection("sessions").insertOne({userId, lastStatus, token});
+         res.sendStatus(200);
          return;
       }
 
