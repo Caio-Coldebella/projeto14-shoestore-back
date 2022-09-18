@@ -1,21 +1,10 @@
 import db from "../src/db.js";
 
 export async function postcheckoutController(req,res){
-    const token = req.headers.authentication.replace('Bearer: ','');
-    const idItem = req.body.id;
-    try {
-        const iduser = await db.collection("sessions").find({token: token}).toArray();
-        if(iduser.length != 1){
-            res.sendStatus(404);
-            return;
-        }
-        const cart = await db.collection("carts").find({userId: iduser[0].userId}).toArray();
-        if(cart.length != 1){
-            res.sendStatus(404)
-            return;
-        }
-        const arrcart = [...cart[0].cart,idItem]
-        await db.collection("carts").updateOne({userId: iduser[0].userId},{$set:{cart: arrcart}});
+    const id = res.locals.id;
+    const newarr = res.locals.cart;
+    try{
+        await db.collection("carts").updateOne({userId: id},{$set:{cart: newarr}});
         res.sendStatus(200);
     } catch (error) {
         console.error(error);
@@ -23,6 +12,17 @@ export async function postcheckoutController(req,res){
     }
 }
 
-export async function getcheckoutController(){
-    return null;
+export async function getcheckoutController(req,res){
+    const id = res.locals.id;
+    try {
+        const cart = await db.collection("carts").find({userId: id}).toArray();
+        if(cart.length != 1){
+            res.sendStatus(404)
+            return;
+        }
+        res.send(cart[0].cart);
+    } catch (error) {
+        console.error(error);
+        res.sendStatus(500);
+    }
 }
