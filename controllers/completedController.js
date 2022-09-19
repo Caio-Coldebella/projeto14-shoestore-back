@@ -14,7 +14,7 @@ export async function postCompletedController(req, res) {
          address: userinfo.address,
          fone: userinfo.phone,
          email: userinfo.email,
-         sum: sum,
+         sum: sum
       });
       res.sendStatus(201);
    } catch (error) {
@@ -24,11 +24,10 @@ export async function postCompletedController(req, res) {
 export async function getCompletedController(req, res) {
    const { user } = req.headers;
    try {
-      const userinfo = await db.collection("users").find({ name: user });
-      console.log(userinfo)
+      const userinfo = await db.collection("users").findOne({ name: user });
       const completedInfo = await db
          .collection("history")
-         .find({ userId: userinfo._id });
+         .findOne({ userId: userinfo._id });
       await db.collection("carts").updateOne({userId: userinfo._id},{$set:{cart: []}});
       res.send(completedInfo);
    } catch (error) {
