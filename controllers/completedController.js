@@ -28,10 +28,6 @@ export async function getCompletedController(req, res) {
       const completedInfo = await db
          .collection("history")
          .findOne({ userId: userinfo._id });
-      completedInfo.products.map(async (productId)=>{
-        const item = await db.collection('items').findOne({_id:productId})
-        completedInfo.productsName = [...productsName, item.name]
-      })
       res.send(completedInfo);
    } catch (error) {
       res.send(error.message).status(500);
