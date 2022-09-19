@@ -17,10 +17,10 @@ export default async function signupMiddleware(req, res, next) {
    }
    const hasuser = await db
       .collection("users")
-      .find({ email: userData.email })
+      .find({ name: userData.name })
       .toArray();
    if (hasuser.length > 0) {
-      res.status(400).send("Esse email já está cadastrado");
+      res.status(400).send("Esse usuário já está cadastrado");
       return;
    }
 
