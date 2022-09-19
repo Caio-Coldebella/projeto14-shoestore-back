@@ -8,7 +8,7 @@ export default async function signupMiddleware(req, res, next) {
       email: Joi.string().email({ tlds: { allow: false } }),
       password: Joi.string().min(1).required(),
       address: Joi.string().min(1).required(),
-      phone: Joi.number().required(),
+      phone: Joi.required(),
    });
    const validate = postSchema.validate(userData);
    if (validate.error) {
